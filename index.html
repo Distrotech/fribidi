@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Fribidi by Distrotech</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Fribidi</h1>
+          <h2>Mirror of git://anongit.freedesktop.org/fribidi/fribidi</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/Distrotech/fribidi/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/Distrotech/fribidi/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/Distrotech/fribidi" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <p>This is GNU FriBidi
+The Free Implementation of the Unicode Bidirectional Algorithm.</p>
+
+<h1>
+<a name="background" class="anchor" href="#background"><span class="octicon octicon-link"></span></a>Background</h1>
+
+<p>One of the missing links stopping the penetration of free software in Middle
+East is the lack of support for the Arabic and Hebrew alphabets. In order to
+have proper Arabic and Hebrew support, the BiDi algorithm should have been
+implemented. It is our hope that this library will stimulate more free
+software in the Middle Eastern countries.</p>
+
+<h1>
+<a name="audience" class="anchor" href="#audience"><span class="octicon octicon-link"></span></a>Audience</h1>
+
+<p>It is our hope that this library will stimulate the implementation of Hebrew
+and Arabic in lots of free software. Here is a small list of projects that
+would benefit from the use of the GNU FriBidi library, but of course there are
+many more: Wine, Mozilla, Qt, KDE, lynx, OpenOffice.</p>
+
+<p>GNU FriBidi is already being used in projects like Pango (resulting in GTK+
+and GNOME using GNU FriBidi), AbiWord, MLTerm, MPlayer, and BiCon.</p>
+
+<h1>
+<a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h1>
+
+<p>Currently GNU FriBidi does not depend on any other library, but uses Glib if
+available.  It uses GNU Build System for build and installation on POSIX
+systems.</p>
+
+<h1>
+<a name="downloading" class="anchor" href="#downloading"><span class="octicon octicon-link"></span></a>Downloading</h1>
+
+<p>The latest version of GNU FriBidi may be found at:</p>
+
+<p><a href="http://fribidi.org/">http://fribidi.org/</a></p>
+
+<h1>
+<a name="building" class="anchor" href="#building"><span class="octicon octicon-link"></span></a>Building</h1>
+
+<p>See INSTALL for a description of how to build and install GNU FriBidi.</p>
+
+<h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>GNU FriBidi is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.</p>
+
+<p>GNU FriBidi is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.</p>
+
+<p>You should have received a copy of the GNU Lesser General Public License
+along with GNU FriBidi, in a file named COPYING; if not, write to the
+Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA  02110-1301  USA</p>
+
+<p>For licensing issues, contact <a href="mailto:license@farsiweb.info">license@farsiweb.info</a>.</p>
+
+<h1>
+<a name="implementation" class="anchor" href="#implementation"><span class="octicon octicon-link"></span></a>Implementation</h1>
+
+<p>The library implements the algorithm described in the "Unicode Standard
+Annex #9, The Bidirectional Algorithm", available at
+<a href="http://www.unicode.org/unicode/reports/tr9/">http://www.unicode.org/unicode/reports/tr9/</a>. GNU Fribidi has been tested
+exhaustively against the Unicode Reference Code, and to the best of our
+knowledge, it completely conforms to the specification, always producing
+the same result as the Reference Code.</p>
+
+<p>The library uses Unicode (UTF32) entirely. The character properties are
+automatically extracted from the Unicode data files, available from:</p>
+
+<pre><code>http://www.unicode.org/Public/UNIDATA/
+</code></pre>
+
+<p>This means that every Unicode character is treated in strict accordance
+with the Unicode specification.</p>
+
+<p>There is a limited support for character set conversion from/to the UTF32
+encoding.  Data in these character sets must be converted into UTF32 before
+the library may be used.  iconv(3) can always do a better job on that, so you
+may find that the character sets conversion code is typically turned off on
+POSIX machines.</p>
+
+<p>The reordering of characters is typically done through the function:</p>
+
+<pre><code> fribidi_boolean
+ fribidi_log2vis(/* input */
+         FriBidiChar *str,
+         FriBidiStrIndex len,
+         FriBidiCharType *pbase_dir,
+         /* output */
+         FriBidiChar *visual_str,
+         FriBidiStrIndex *position_L_to_V_list,
+         FriBidiStrIndex *position_V_to_L_list,
+         FriBidiLevel    *embedding_level_list
+         )
+</code></pre>
+
+<p>where
+     str                    is the Unicode input string
+     len                    is the length of the unicode string
+     pbase_dir              is the input and output base direction. If 
+                            base == FRIBIDI_TYPE_ON then fribidi_log2vis 
+                            calculates the base direction on its own
+                            according to the BiDi algorithm.
+     visual_str             The reordered output unicode string.
+     position_L_to_V_list   Maps the positions in the logical string to 
+                            positions in the visual string.
+     position_V_to_L_list   Maps the positions in the visual string to 
+                            the positions in the logical string.
+     embedding_level_list   Returns the classification of each character. Even
+                            levels indicate LTR characters, and odd levels
+                            indicate RTL characters. The main use of this
+                            list is in interactive applications when the
+                            embedding e.g. level determines cursor display.</p>
+
+<p>In any of the output pointers == NULL, then that information is not 
+calculated.</p>
+
+<h1>
+<a name="how-it-looks-like" class="anchor" href="#how-it-looks-like"><span class="octicon octicon-link"></span></a>How it looks like</h1>
+
+<p>Have a look at tests directory, to see some input and outputs, which
+CapRTL charset means that CAPITAL letters are right to left, and digits
+6, 7, 8, 9 are Arabic digits, try 'fribidi --charsetdesc CapRTL' for the
+full description.</p>
+
+<h1>
+<a name="executable" class="anchor" href="#executable"><span class="octicon octicon-link"></span></a>Executable</h1>
+
+<p>There is also a command-line utilitity called fribidi that loops over
+the text of a file and performs the BiDi algorithm on each line, also
+used for testing the algorithm. Run fribidi with the --help option to
+learn about usage.  The command-line utility is known to have problems
+with line-breaking and ltov/vtol lists.</p>
+
+<h1>
+<a name="bugs-and-comments" class="anchor" href="#bugs-and-comments"><span class="octicon octicon-link"></span></a>Bugs and comments</h1>
+
+<p>Report GNU FriBidi bugs at:</p>
+
+<pre><code>http://fribidi.org/bug
+</code></pre>
+
+<p>And send your comments to:</p>
+
+<pre><code>fribidi@freedesktop.org
+</code></pre>
+
+<p>Behdad Esfahbod
+<a href="mailto:behdad@gnu.org">behdad@gnu.org</a></p>
+        </section>
+
+        <footer>
+          Fribidi is maintained by <a href="https://github.com/Distrotech">Distrotech</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
