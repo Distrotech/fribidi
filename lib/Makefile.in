@@ -80,9 +80,10 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 @OS_WIN32_TRUE@am__append_1 = -export-symbols $(srcdir)/fribidi.def
-@FRIBIDI_CHARSETS_TRUE@am__append_2 = -I$(top_srcdir)/charset
-@FRIBIDI_CHARSETS_TRUE@am__append_3 = $(top_builddir)/charset/libfribidi-char-sets.la
+@OS_WIN32_FALSE@am__append_2 = -export-symbols-regex "^fribidi_.*"
+@FRIBIDI_CHARSETS_TRUE@am__append_3 = -I$(top_srcdir)/charset
 @FRIBIDI_CHARSETS_TRUE@am__append_4 = $(top_builddir)/charset/libfribidi-char-sets.la
+@FRIBIDI_CHARSETS_TRUE@am__append_5 = $(top_builddir)/charset/libfribidi-char-sets.la
 DIST_COMMON = $(srcdir)/Headers.mk $(srcdir)/Makefile.in \
 	$(srcdir)/Makefile.am $(srcdir)/fribidi-config.h.in \
 	$(top_srcdir)/depcomp $(pkginclude_HEADERS)
@@ -337,11 +338,11 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 EXTRA_DIST = fribidi.def
 lib_LTLIBRARIES = libfribidi.la
-AM_CPPFLAGS = $(MISC_CFLAGS) $(am__append_2)
+AM_CPPFLAGS = $(MISC_CFLAGS) $(am__append_3)
 libfribidi_la_LDFLAGS = -no-undefined -version-info $(LT_VERSION_INFO) \
-	-export-symbols-regex "^fribidi_.*" $(am__append_1)
-libfribidi_la_LIBADD = $(MISC_LIBS) $(am__append_3)
-libfribidi_la_DEPENDENCIES = $(am__append_4)
+	$(am__append_1) $(am__append_2)
+libfribidi_la_LIBADD = $(MISC_LIBS) $(am__append_4)
+libfribidi_la_DEPENDENCIES = $(am__append_5)
 libfribidi_la_headers = \
 		fribidi-arabic.h \
 		fribidi-begindecls.h \

@@ -448,7 +448,12 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-TESTS_ENVIRONMENT = /bin/sh
+TESTS_ENVIRONMENT = \
+	srcdir=${srcdir}; export srcdir; \
+	top_builddir=${top_builddir}; export top_builddir; \
+	EXEEXT=${EXEEXT}; export EXEEXT;
+
+AM_TESTS_ENVIRONMENT = $(TESTS_ENVIRONMENT)
 TESTS = run.tests
 check_SCRIPTS = run.tests
 TEST_DATAS = \
